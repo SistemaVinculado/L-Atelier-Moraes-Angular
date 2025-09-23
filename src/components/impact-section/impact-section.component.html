@@ -1,0 +1,44 @@
+<section class="py-16 sm:py-24 relative overflow-hidden bg-charcoal">
+  <!-- Animated Grid Background -->
+  <div class="absolute inset-0 z-0 opacity-20">
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_300px,rgba(50,150,255,0.1),transparent)]"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl sm:text-5xl font-bold tracking-tight" appAnimateOnScroll appShimmerText [alternateText]="'Resultados que Falam por Si'">
+        Impacto Fundamental
+      </h2>
+      <p class="mt-4 text-lg text-gray-400" appAnimateOnScroll [animationDelay]="'100ms'">
+        Uno princípios criativos e dados para entregar não apenas estética, mas resultados de negócio fundamentais que impulsionam o crescimento e o prestígio de meus parceiros.
+      </p>
+    </div>
+    
+    <div class="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      @for (stat of displayedStats(); track stat.label; let i = $index) {
+        <div 
+          class="group relative" 
+          style="perspective: 800px;" 
+          appAnimateOnScroll 
+          [animationDelay]="(i * 150) + 200 + 'ms'">
+          <div class="stat-card-inner bg-charcoal-light/80 backdrop-blur-md rounded-2xl p-8 border border-gray-800 h-full flex flex-col justify-between">
+            
+            <!-- Visible Content -->
+            <div>
+              <p class="text-6xl sm:text-7xl font-bold text-white tracking-tighter">
+                <span class="tabular-nums">{{ stat.displayValue }}</span>{{ stat.suffix }}<span class="text-green-500">+</span>
+              </p>
+              <h3 class="mt-4 text-lg font-semibold text-gray-300">{{ stat.label }}</h3>
+            </div>
+
+            <!-- Hover Content -->
+            <div class="absolute inset-0 bg-charcoal-light p-8 rounded-2xl flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+              <p class="text-gray-300">{{ stat.description }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

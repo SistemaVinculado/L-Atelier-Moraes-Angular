@@ -1,0 +1,64 @@
+<section class="py-16 sm:py-24 bg-charcoal">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="group project-card">
+      <div class="project-card-inner">
+        <div class="relative bg-charcoal-light rounded-3xl border border-gray-800 p-8 sm:p-12 md:p-20 text-center overflow-hidden">
+          <!-- Background Pattern -->
+          <div class="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.01)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.01)_50%,rgba(255,255,255,0.01)_75%,transparent_75%,transparent)] bg-[length:60px_60px] opacity-50"></div>
+          
+          <!-- Glowing Border -->
+          <div class="cta-card-glow"></div>
+
+          <!-- Content -->
+          <div class="relative z-10">
+            <h2 class="text-5xl sm:text-7xl font-bold tracking-tighter leading-tight" appAnimateOnScroll appShimmerText [alternateText]="'Vamos Construir Algo Incrível'">
+              Pronto para Construir um Legado Digital?
+            </h2>
+            <p class="max-w-xl mx-auto mt-4 text-gray-400" appAnimateOnScroll [animationDelay]="'100ms'">
+              Compartilhe sua visão. O primeiro passo para uma colaboração de prestígio começa aqui.
+            </p>
+            <div class="mt-12 max-w-lg mx-auto" appAnimateOnScroll [animationDelay]="'200ms'">
+              <form (ngSubmit)="submitForm()" class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-grow">
+                  <input 
+                    type="email" 
+                    [formControl]="emailControl"
+                    placeholder="seu.email@exemplo.com"
+                    class="w-full bg-charcoal border-2 border-gray-700 rounded-full px-6 py-4 text-lg text-white focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all duration-300">
+                  @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+                    <p class="text-red-400 text-sm mt-2 text-left pl-6">
+                      @if (emailControl.hasError('required')) {
+                        O e-mail é obrigatório.
+                      }
+                      @if (emailControl.hasError('email')) {
+                        Por favor, insira um formato de e-mail válido.
+                      }
+                    </p>
+                  }
+                </div>
+                <button 
+                  type="submit" 
+                  [disabled]="emailControl.invalid || isSubmitting()"
+                  class="inline-flex justify-center items-center bg-green-500 text-black rounded-full px-8 py-4 text-lg font-semibold disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed btn-fancy-green">
+                  <span class="btn-content">
+                    @if(isSubmitting()) {
+                      <span class="flex items-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Enviando...
+                      </span>
+                    } @else {
+                      <span>Iniciar Colaboração</span>
+                    }
+                  </span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

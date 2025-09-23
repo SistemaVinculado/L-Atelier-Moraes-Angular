@@ -1,0 +1,43 @@
+<section class="py-16 sm:py-24">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div appAnimateOnScroll>
+        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight">Perspectiva Global. Execução de Precisão.</h2>
+        <p class="mt-6 text-lg text-gray-300 leading-relaxed">
+          Nossa presença é digital, mas nossa perspectiva é global. Colaboramos com líderes de mercado em diversos continentes, aplicando insights internacionais para criar soluções que ressoam localmente e escalam globalmente.
+        </p>
+        <div class="mt-10 grid grid-cols-2 gap-8">
+          @for (stat of stats; track stat.label) {
+            <div>
+              <p class="text-4xl sm:text-5xl font-bold text-white">{{ stat.value }}</p>
+              <p class="mt-2 text-gray-400">{{ stat.label }}</p>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="relative w-full aspect-[2/1]" appAnimateOnScroll [animationDelay]="'200ms'">
+        <!-- World Map SVG -->
+        <svg class="w-full h-full text-gray-800" fill="currentColor" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1838 59l-38 13-10-3-13-15-13-3-12 5-11 12-11-2-12-16-16-12-12 11-18 8-20-8-12-13-18-2-10 13-16 1-13-14-11-1 12-11 2-13-16 6-12 16-1-12 12-16-12-16-11-10-18 4-13-1-13-9-16-15-16-2-11 3-11 16-16 11-13-11-12-1-12-15-12 16-21-2-13-11-16 8-12-11-10-13 14-11 14-12 11-16-4-15 13-14-11-14-12-12-13-12-1-12 16-12 15-12-1-11-12-12-14-12-1-12-12-11-15-12-2-12-11-13-12-1-11-11-11-12-11-1-11-12-12-11-12-2-11-12-12-12-11-11-11-2-12-11-11-12-11-2-12-11-11-12-11-2-11-11-12-11-11-1-11-11-12-11-12-1-11-11-11-12-11-2-11-11-11-11-12-2-11-11-11-12-11-2-12-11-11-11-11-2-11-11-11-11-11-2-11-11-11-11-11-2-11-11-12-11-12-2-11-11-11-11-11-2-11-11-11-11-11-1-11-12-11-11-11-2-11-11-11-11-11-1-11-12-11-11-11-2-11-11-11-11-11-2-11-11-11-11-11-2-11-11-11-11-11-2-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-11-11-11-11-11-1-1..."/>
+        </svg>
+
+        <!-- Pulsing Dots for locations -->
+        <div class="absolute top-[65%] left-[30%]" title="São Paulo, Brasil">
+          <div class="w-3 h-3 bg-white rounded-full pulsing-dot"></div>
+        </div>
+        <div class="absolute top-[40%] left-[20%]" title="Nova York, EUA">
+          <div class="w-3 h-3 bg-white rounded-full pulsing-dot"></div>
+        </div>
+        <div class="absolute top-[35%] left-[48%]" title="Londres, Reino Unido">
+          <div class="w-3 h-3 bg-white rounded-full pulsing-dot"></div>
+        </div>
+         <div class="absolute top-[42%] left-[80%]" title="Tóquio, Japão">
+          <div class="w-3 h-3 bg-white rounded-full pulsing-dot"></div>
+        </div>
+        <div class="absolute top-[75%] left-[85%]" title="Sydney, Austrália">
+          <div class="w-3 h-3 bg-white rounded-full pulsing-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

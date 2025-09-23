@@ -1,0 +1,159 @@
+<section class="py-16 sm:py-24 bg-black">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl sm:text-5xl font-bold tracking-tight" appAnimateOnScroll appShimmerText [alternateText]="'Configure seu Projeto Técnico'">Configure seu Projeto Fundamental</h2>
+      <p class="mt-4 text-lg text-gray-400" appAnimateOnScroll [animationDelay]="'100ms'">
+        Selecione a tecnologia fundamental, configure as funcionalidades essenciais e defina seu orçamento para uma estimativa precisa. Este é o primeiro passo para uma colaboração de prestígio.
+      </p>
+    </div>
+
+    <div class="mt-16" appAnimateOnScroll [animationDelay]="'200ms'">
+      <div class="relative flex items-center justify-center flex-wrap gap-2 p-1 bg-[#111111] rounded-full w-fit mx-auto border border-gray-800">
+        <!-- Sliding Highlight -->
+        <div 
+          class="absolute top-1 bottom-1 left-0 rounded-full transition-all duration-300 ease-out"
+          [style]="highlightStyle()"
+          [style.background-color]="activeGlowColor()">
+        </div>
+
+        <!-- Buttons -->
+        <button 
+          #angularBtn
+          (click)="setActiveTab('angular')"
+          [class.text-white]="activeTab() === 'angular'"
+          [class.text-gray-300]="activeTab() !== 'angular'"
+          class="relative z-10 flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-base sm:text-lg font-semibold transition-colors duration-300 hover:text-white focus:outline-none">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 shrink-0 transition-colors duration-300" [style.color]="activeTab() === 'angular' ? 'white' : '#ef4444'">
+              <path d="M12 2L4 5L5 18L12 22L19 18L20 5L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 8L12 17L8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.5 13H14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <span>Angular</span>
+        </button>
+        <button 
+          #reactBtn
+          (click)="setActiveTab('react')"
+          [class.text-white]="activeTab() === 'react'"
+          [class.text-gray-300]="activeTab() !== 'react'"
+          class="relative z-10 flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-base sm:text-lg font-semibold transition-colors duration-300 hover:text-white focus:outline-none">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 shrink-0 transition-colors duration-300" [style.color]="activeTab() === 'react' ? 'white' : '#3b82f6'">
+              <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="2"/>
+              <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)" stroke="currentColor" stroke-width="2"/>
+              <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          <span>React</span>
+        </button>
+        <button 
+          #backendBtn
+          (click)="setActiveTab('backend')"
+          [class.text-white]="activeTab() === 'backend'"
+          [class.text-gray-300]="activeTab() !== 'backend'"
+          class="relative z-10 flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-base sm:text-lg font-semibold transition-colors duration-300 hover:text-white focus:outline-none">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 shrink-0 transition-colors duration-300" [style.color]="activeTab() === 'backend' ? 'white' : '#a855f7'">
+              <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <span>Backend</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-12 grid lg:grid-cols-3 gap-16">
+      <!-- Left Column: Feature Selection -->
+      <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        @for(feature of activeFeatures(); track feature.id; let i = $index) {
+          <div 
+            (click)="toggleFeature(feature.id)"
+            class="animate-card-fade-in relative group bg-charcoal-light/60 backdrop-blur-md rounded-2xl border border-gray-800 p-6 cursor-pointer transition-all duration-300 hover:border-gray-600 hover:-translate-y-1"
+            [class.!border-green-500]="selectedFeatures().has(feature.id)"
+            [style.animation-delay]="i * 100 + 250 + 'ms'"
+            style="opacity: 0;">
+            
+            <div 
+              class="absolute top-5 right-5 h-6 w-6 rounded-full border-2 transition-all duration-300 flex items-center justify-center"
+              [class.bg-green-500]="selectedFeatures().has(feature.id)"
+              [class.border-gray-600]="!selectedFeatures().has(feature.id)"
+              [class.group-hover:border-gray-400]="!selectedFeatures().has(feature.id)"
+              [class.border-green-500]="selectedFeatures().has(feature.id)">
+              @if(selectedFeatures().has(feature.id)) {
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              }
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="text-gray-500 transition-colors duration-300" 
+                   [class.text-green-400]="selectedFeatures().has(feature.id)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 flex-shrink-0" [innerHTML]="feature.iconSvg"></svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white">{{ feature.name }}</h3>
+                <p class="text-gray-400 mt-1">{{ feature.description }}</p>
+                <p class="text-lg font-medium text-green-400 mt-3">
+                  + R$ {{ feature.price.toLocaleString('pt-BR') }}
+                </p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Right Column: Summary Panel -->
+      <div class="lg:col-span-1" appAnimateOnScroll [animationDelay]="'400ms'">
+        <div class="sticky top-28 bg-charcoal-light rounded-2xl border border-gray-800 p-8">
+          <h3 class="text-2xl font-bold text-white">Resumo do Orçamento</h3>
+          <div class="mt-8 space-y-6">
+            <div>
+              <div class="flex justify-between items-baseline">
+                <label for="target-budget" class="text-lg font-medium text-gray-300">Seu Orçamento Alvo</label>
+                <span class="text-xl font-bold text-white">R$ {{ targetBudget().toLocaleString('pt-BR') }}</span>
+              </div>
+              <input 
+                id="target-budget"
+                type="range" 
+                min="5000" 
+                max="250000" 
+                step="1000" 
+                [value]="targetBudget()" 
+                (input)="onBudgetChange($event)"
+                class="w-full mt-3">
+            </div>
+
+            <div class="border-t border-gray-700 pt-6">
+              <div class="flex justify-between items-baseline">
+                <span class="text-lg font-medium text-gray-300">Custo Total Estimado</span>
+                <span class="text-xl font-bold text-white">R$ {{ totalCost().toLocaleString('pt-BR') }}</span>
+              </div>
+
+              <div class="mt-4 flex justify-between items-baseline text-sm"
+                  [class.text-green-400]="budgetDifference() >= 0"
+                  [class.text-red-400]="budgetDifference() < 0">
+                @if (budgetDifference() >= 0) {
+                  <span>Abaixo do orçamento por</span>
+                  <span>R$ {{ absBudgetDifference().toLocaleString('pt-BR') }}</span>
+                } @else {
+                  <span>Acima do orçamento por</span>
+                  <span>R$ {{ absBudgetDifference().toLocaleString('pt-BR') }}</span>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 border-t border-gray-700 pt-6">
+            <button 
+              (click)="generateBriefPrompt()"
+              class="w-full bg-white text-black rounded-full px-8 py-4 text-lg font-semibold btn-fancy">
+                <span class="btn-content inline-flex items-center gap-3">
+                  Gerar Briefing Estratégico
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm9.5 4a.5.5 0 00-.5-.5h-2a.5.5 0 000 1h2a.5.5 0 00.5-.5zM5.5 9a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5zM5.5 12a.5.5 0 01.5-.5h5a.5.5 0 010 1h-5a.5.5 0 01-.5-.5z" /></svg>
+                </span>
+            </button>
+            <p class="text-xs text-gray-500 mt-4 text-center">A IA analisará suas escolhas para estruturar um briefing estratégico inicial.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

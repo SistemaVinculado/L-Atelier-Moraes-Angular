@@ -1,0 +1,186 @@
+<section id="specialized-services" class="py-16 sm:py-24 bg-black">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="max-w-3xl">
+        <h2 class="text-4xl sm:text-5xl font-bold tracking-tight" appAnimateOnScroll appShimmerText [alternateText]="'Do Código à Experiência'">Engenharia de Soluções Digitais</h2>
+        <p class="mt-4 text-lg text-gray-400" appAnimateOnScroll [animationDelay]="'100ms'">
+          Nossa expertise técnica aprofundada nos permite arquitetar e construir plataformas digitais de alta performance, escaláveis e seguras, utilizando o que há de mais moderno no ecossistema TypeScript.
+        </p>
+    </div>
+    
+    <div class="mt-12" appAnimateOnScroll [animationDelay]="'200ms'">
+      <div class="relative flex items-center flex-wrap gap-2 p-1 bg-charcoal-light rounded-full w-fit border border-gray-800">
+        <!-- Sliding Highlight -->
+        <div 
+          class="absolute top-1 bottom-1 left-0 rounded-full transition-all duration-300 ease-out"
+          [style]="highlightStyle()"
+          [style.background-color]="activeGlowColor()">
+        </div>
+
+        <!-- Buttons -->
+        <button 
+          #angularBtn
+          (click)="setActiveTab('angular')"
+          [class.text-white]="activeTab() === 'angular'"
+          [class.text-gray-300]="activeTab() !== 'angular'"
+          class="relative z-10 flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-base sm:text-lg font-semibold transition-colors duration-300 hover:text-white focus:outline-none">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 shrink-0 transition-colors duration-300" [style.color]="activeTab() === 'angular' ? 'white' : '#ef4444'">
+              <path d="M12 2L4 5L5 18L12 22L19 18L20 5L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 8L12 17L8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9.5 13H14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <span>Angular + TypeScript</span>
+        </button>
+        <button 
+          #reactBtn
+          (click)="setActiveTab('react')"
+          [class.text-white]="activeTab() === 'react'"
+          [class.text-gray-300]="activeTab() !== 'react'"
+          class="relative z-10 flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-base sm:text-lg font-semibold transition-colors duration-300 hover:text-white focus:outline-none">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 shrink-0 transition-colors duration-300" [style.color]="activeTab() === 'react' ? 'white' : '#3b82f6'">
+              <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="2"/>
+              <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)" stroke="currentColor" stroke-width="2"/>
+              <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          <span>React + TypeScript</span>
+        </button>
+        <button 
+          #backendBtn
+          (click)="setActiveTab('backend')"
+          [class.text-white]="activeTab() === 'backend'"
+          [class.text-gray-300]="activeTab() !== 'backend'"
+          class="relative z-10 flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-base sm:text-lg font-semibold transition-colors duration-300 hover:text-white focus:outline-none">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 shrink-0 transition-colors duration-300" [style.color]="activeTab() === 'backend' ? 'white' : '#a855f7'">
+              <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          <span>Backend + TypeScript</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+      @for (service of activeServices(); track service.name; let i = $index) {
+        <div 
+            class="group project-card animate-card-fade-in"
+            style="opacity: 0;"
+            [style.--glow-color]="activeGlowColor()"
+            [style.animation-delay]="i * 100 + 250 + 'ms'"
+            appAnimateOnScroll>
+          <div class="project-card-inner h-full transition-all duration-300"
+              [class.shadow-[0_0_35px_-5px_var(--glow-color)]]="selectedService() === service.name"
+              [class.shadow-2xl]="selectedService() === service.name">
+            
+            <div 
+              class="relative bg-charcoal-light/60 backdrop-blur-md rounded-2xl border border-gray-800 overflow-hidden h-full flex flex-col transition-all duration-300"
+              [class.border-green-500]="service.isHighlighted && selectedService() !== service.name">
+              
+               <!-- BIG BG ICON -->
+              <div class="absolute -bottom-8 -right-8 z-0 text-white/5 pointer-events-none transition-all duration-500 ease-in-out group-hover:text-white/[0.08] group-hover:scale-110">
+                  @switch (activeTab()) {
+                      @case ('angular') {
+                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-40 h-40">
+                            <path d="M12 2L4 5L5 18L12 22L19 18L20 5L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 8L12 17L8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.5 13H14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                      }
+                      @case ('react') {
+                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-40 h-40">
+                            <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)" stroke="currentColor" stroke-width="1.5"/>
+                            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)" stroke="currentColor" stroke-width="1.5"/>
+                          </svg>
+                      }
+                      @case ('backend') {
+                          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-40 h-40">
+                            <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 12c0 1.66-4.03 3-9 3s-9-1.34-9-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                      }
+                  }
+              </div>
+              
+              <div (click)="toggleService(service.name)" class="p-8 cursor-pointer relative z-10">
+                <!-- Badge -->
+                @if (service.isHighlighted && service.badge) {
+                  <div class="absolute top-8 right-8 bg-green-500 text-black px-3 py-1 rounded-full text-xs font-semibold z-20 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    <span>{{ service.badge }}</span>
+                  </div>
+                }
+                <div class="grid md:grid-cols-3 gap-4">
+                  <div class="md:col-span-2">
+                    <h3 class="text-2xl sm:text-3xl font-medium text-white">{{ service.name }}</h3>
+                    <p class="text-gray-400 mt-2">{{ service.description }}</p>
+                  </div>
+                  <div class="md:text-right mt-4 md:mt-0">
+                    <p class="text-xl font-medium" [class.text-green-500]="service.isHighlighted" [class.text-white]="!service.isHighlighted">{{ service.price }}</p>
+                    @if(service.details) { <p class="text-sm text-gray-500 mt-1">{{ service.details }}</p> }
+                  </div>
+                </div>
+              </div>
+
+              <div class="overflow-hidden transition-[max-height] duration-700 ease-in-out"
+                  [class.max-h-0]="selectedService() !== service.name"
+                  [class.max-h-[1000px]]="selectedService() === service.name">
+                <div class="px-8 pb-8 relative z-10">
+                  <div class="mt-6 border-t border-gray-700 pt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                    @if(service.benefits) {
+                      <div>
+                        <h4 class="font-semibold text-white mb-3">Principais Benefícios</h4>
+                        <ul class="space-y-2">
+                          @for(benefit of service.benefits; track benefit) {
+                            <li class="flex items-start gap-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-400 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                              <span class="text-gray-300">{{ benefit }}</span>
+                            </li>
+                          }
+                        </ul>
+                      </div>
+                    }
+                    @if(service.techStack) {
+                      <div>
+                        <h4 class="font-semibold text-white mb-3">Tecnologias</h4>
+                        <ul class="space-y-2">
+                          @for(tech of service.techStack; track tech) {
+                            <li class="flex items-start gap-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                              <span class="text-gray-300">{{ tech }}</span>
+                            </li>
+                          }
+                        </ul>
+                      </div>
+                    }
+                    @if(service.scope) {
+                      <div>
+                        <h4 class="font-semibold text-white mb-3">Escopo Típico</h4>
+                        <ul class="space-y-2">
+                          @for(item of service.scope; track item) {
+                            <li class="flex items-start gap-3">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                              <span class="text-gray-300">{{ item }}</span>
+                            </li>
+                          }
+                        </ul>
+                      </div>
+                    }
+                  </div>
+                  <div class="mt-8 pt-6 border-t border-gray-700 flex justify-end">
+                    <button (click)="requestQuote(service)" class="bg-white text-black rounded-full px-8 py-4 text-lg font-semibold btn-fancy">
+                        <span class="btn-content inline-flex items-center gap-3">
+                          Solicitar Orçamento
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                        </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
