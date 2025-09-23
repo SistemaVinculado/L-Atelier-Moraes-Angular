@@ -1,0 +1,54 @@
+<section class="pt-32 pb-24 bg-black">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl sm:text-5xl font-bold tracking-tight mb-6" appAnimateOnScroll appShimmerText [alternateText]="'Ferramentas de Nossa Maestria'">
+        Domínio Tecnológico
+      </h2>
+      <p class="text-lg text-gray-400" appAnimateOnScroll [animationDelay]="'100ms'">
+        Minha abordagem fundamentalista seleciona apenas tecnologias de ponta, combinando-as com uma expertise rigorosa para construir ecossistemas digitais que são fundamentalmente poderosos, elegantes e perpetuamente escaláveis.
+      </p>
+    </div>
+
+    <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+      @for (category of techCategories; track category.name; let i = $index) {
+        <div 
+          class="group project-card"
+          appAnimateOnScroll 
+          [animationDelay]="(i * 150) + 200 + 'ms'">
+          <div class="project-card-inner h-full">
+            <div class="relative bg-charcoal-light rounded-2xl border border-gray-800 p-8 h-full overflow-hidden">
+              <!-- Background decorative gradient -->
+              <div 
+                class="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full transition-all duration-700 ease-in-out opacity-0 group-hover:opacity-10"
+                [style.background-image]="'radial-gradient(circle, ' + (i % 2 === 0 ? '#4ade80' : '#3b82f6') + ' 0%, transparent 70%)'">
+              </div>
+              
+              <h3 class="text-3xl font-semibold text-white mb-6 relative z-10">{{ category.name }}</h3>
+              
+              <div class="flex flex-wrap gap-3 relative z-10">
+                @for (tech of category.technologies; track tech.name) {
+                  <div 
+                    class="relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ease-out border"
+                    [class.bg-white/10]="tech.isPrimary"
+                    [class.text-white]="tech.isPrimary"
+                    [class.border-white/20]="tech.isPrimary"
+                    [class.bg-white/5]="!tech.isPrimary"
+                    [class.text-gray-300]="!tech.isPrimary"
+                    [class.border-white/10]="!tech.isPrimary"
+                    [class.hover:bg-white]="tech.isPrimary"
+                    [class.hover:text-black]="tech.isPrimary"
+                    [class.hover:border-white]="tech.isPrimary"
+                    [class.hover:bg-white/20]="!tech.isPrimary"
+                    [class.hover:text-white]="!tech.isPrimary"
+                    [class.hover:border-white/30]="!tech.isPrimary">
+                      {{ tech.name }}
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

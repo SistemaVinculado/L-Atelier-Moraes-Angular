@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>L'Atelier Moraes</title>
+  <base href="/L-Atelier-Moraes-Angular/">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="L'Atelier Moraes: Um estúdio de design e engenharia digital que cria experiências web fundamentais para marcas de prestígio." />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            charcoal: '#1A1A1A',
+            'charcoal-light': '#242424',
+          },
+          backgroundImage: {
+            'radial-gradient-glow': 'radial-gradient(circle at 50% 0%, rgba(180, 180, 180, 0.08) 0%, rgba(17, 17, 17, 0) 70%)',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: 0 },
+              '100%': { opacity: 1 },
+            },
+            slideInRight: {
+              '0%': { transform: 'translateX(100%)' },
+              '100%': { transform: 'translateX(0)' },
+            },
+            slideOutRight: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(100%)' },
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            'marquee-reverse': {
+              '0%': { transform: 'translateX(-50%)' },
+              '100%': { transform: 'translateX(0%)' },
+            },
+            'card-fade-in': {
+              'from': { opacity: 0, transform: 'translateY(1rem)' },
+              'to': { opacity: 1, transform: 'translateY(0)' },
+            },
+            spin: {
+              'to': { transform: 'rotate(360deg)' },
+            },
+            'modal-scale-in': {
+              'from': { opacity: 0, transform: 'scale(0.95)' },
+              'to': { opacity: 1, transform: 'scale(1)' },
+            },
+            'section-fade-in': {
+                'from': { opacity: 0, transform: 'translateY(1rem)' },
+                'to': { opacity: 1, transform: 'translateY(0)' },
+            },
+            'glow-pulse': {
+              '50%': { boxShadow: '0 0 20px 5px rgba(74, 222, 128, 0.2)' }
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.3s ease-out',
+            'slide-in-right': 'slideInRight 0.4s ease-out',
+            'slide-out-right': 'slideOutRight 0.4s ease-in',
+            'marquee': 'marquee 30s linear infinite',
+            'marquee-reverse': 'marquee-reverse 30s linear infinite',
+            'marquee-slow': 'marquee 50s linear infinite',
+            'card-fade-in': 'card-fade-in 0.5s ease-out forwards',
+            'spin': 'spin 1s linear infinite',
+            'modal-scale-in': 'modal-scale-in 0.3s ease-out',
+            'section-fade-in': 'section-fade-in 0.5s ease-out forwards',
+            'glow-pulse': 'glow-pulse 4s infinite ease-in-out',
+          },
+        },
+      },
+    };
+  </script>
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    overflow-x: hidden;
+    cursor: none;
+  }
+  a, button, [appCursorHover], .cursor-pointer {
+    cursor: none;
+  }
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  .shimmer-bg {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.08) 20%,
+      rgba(255, 255, 255, 0.2) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 1.5s infinite;
+  }
+  .app-shimmer-text {
+    isolation: isolate;
+  }
+  .app-shimmer-text::before {
+    content: var(--alternate-text);
+    position: absolute;
+    inset: 0;
+    color: #6b7280; /* tailwind text-gray-500 */
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+  }
+  .app-shimmer-text.shimmer-active::before {
+    opacity: 1;
+  }
+  .text-stroke {
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
+  }
+  .track3d-container {
+    transform-style: preserve-3d;
+  }
+  .track3d-top {
+    transform: rotateX(30deg) translateZ(-20px);
+  }
+  .track3d-bottom {
+    transform: rotateX(-30deg) translateZ(-20px);
+  }
+  .group:hover .track3d-top,
+  .group:hover .track3d-bottom {
+    transform: rotateX(0deg) translateZ(0px);
+  }
+
+  /* Added for Work Section complexity */
+  .project-card {
+    perspective: 1000px;
+  }
+  .project-card-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .group:hover .project-card-inner {
+    transform: translateZ(30px) rotateX(3deg) rotateY(-3deg);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Button visual complexity styles */
+    .btn-fancy,
+    a.btn-fancy,
+    .btn-fancy-green,
+    a.btn-fancy-green {
+      position: relative;
+      overflow: hidden;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      transform: translate3d(0,0,0);
+      transition: color 0.4s ease, transform 0.2s ease-out;
+    }
+    .btn-fancy:active,
+    a.btn-fancy:active,
+    .btn-fancy-green:active,
+    a.btn-fancy-green:active {
+      transform: scale(0.98);
+    }
+    .btn-fancy:hover,
+    a.btn-fancy:hover,
+    .btn-fancy-green:hover,
+    a.btn-fancy-green:hover {
+        color: #fff;
+    }
+    .btn-fancy > .btn-content,
+    a.btn-fancy > .btn-content,
+    .btn-fancy-green > .btn-content,
+    a.btn-fancy-green > .btn-content {
+      position: relative;
+      z-index: 2;
+    }
+    .btn-fancy::before,
+    a.btn-fancy::before,
+    .btn-fancy-green::before,
+    a.btn-fancy-green::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .btn-fancy:hover::before,
+    a.btn-fancy:hover::before,
+    .btn-fancy-green:hover::before,
+    a.btn-fancy-green:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    .btn-fancy::before,
+    a.btn-fancy::before {
+      background: #1A1A1A; /* charcoal */
+    }
+    .btn-fancy-green::before,
+    a.btn-fancy-green::before {
+      background: #15803d; /* darker green */
+    }
+
+    /* Animated underline for links */
+    .link-underline {
+      position: relative;
+    }
+    .link-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1px;
+      background-color: white;
+      transition: width 0.3s ease-out;
+    }
+    .link-underline:hover::after {
+      width: 100%;
+    }
+
+  /* Custom Range Slider Styles */
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: transparent;
+  }
+
+  input[type=range]:focus {
+    outline: none;
+  }
+
+  /* Track */
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #242424; /* charcoal-light */
+    border-radius: 2px;
+    border: 1px solid #373737;
+  }
+
+  input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #242424;
+    border-radius: 2px;
+    border: 1px solid #373737;
+  }
+
+  /* Thumb */
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 2px solid #111111;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    margin-top: -8px; /* Offset the thumb to center it on the track */
+    transition: transform 0.2s ease;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    border: 2px solid #111111;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+  }
+
+  input[type=range]:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+  }
+
+  /* For the timeline line in ProcessSectionComponent */
+  .timeline-track::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #242424, #242424 50%, transparent 50%);
+    background-size: 1px 12px;
+  }
+
+  /* For the glowing effect on the timeline nodes */
+  @keyframes timeline-pulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
+    }
+  }
+  .timeline-node-active {
+    animation: timeline-pulse 2s infinite;
+  }
+
+  /* Enhanced styles for Client Section */
+  .client-logo-item {
+    opacity: 0.6;
+    filter: grayscale(1);
+    transition: all 0.3s ease-out;
+    text-shadow: 0 0 0 transparent;
+  }
+  .client-logo-item:hover {
+    opacity: 1;
+    filter: grayscale(0);
+    transform: scale(1.1);
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+  }
+
+  /* New styles for Availability Section */
+  .text-glow {
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.2), 0 0 15px rgba(74, 222, 128, 0.1); /* green-500 glow */
+    transition: text-shadow 0.4s ease-out;
+  }
+  .group:hover .text-glow {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.3), 0 0 30px rgba(74, 222, 128, 0.2);
+  }
+
+  .perspective-container {
+    perspective: 1500px;
+  }
+  .transform-3d-interactive {
+    transform-style: preserve-3d;
+    transition: transform 0.15s linear;
+  }
+  
+  .dot-solid {
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.7);
+  }
+  .group:hover .dot-solid {
+    transform: scale(1.2);
+    box-shadow: 0 0 25px rgba(74, 222, 128, 1);
+  }
+  .dot-outline {
+    transition: all 0.3s ease;
+  }
+  .group:hover .dot-outline {
+    transform: scale(1.2) rotate(90deg);
+    border-color: #4ade80; /* green-500 */
+  }
+
+  /* CTA Card Styles */
+  .cta-card-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 1.5rem; /* rounded-3xl */
+    box-shadow: 0 0 15px 2px rgba(74, 222, 128, 0.1); /* green-500 glow */
+    animation: glow-pulse 4s infinite ease-in-out;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .group:hover .cta-card-glow {
+    box-shadow: 0 0 25px 8px rgba(74, 222, 128, 0.15); /* green-500 glow */
+  }
+  
+  /* Footer Social Icon Styles */
+  .footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    background-color: #242424; /* charcoal-light */
+    color: #9ca3af; /* gray-400 */
+    transition: all 0.3s ease-out;
+  }
+  .footer-social-icon:hover {
+    background-color: #fff;
+    color: #111;
+    transform: scale(1.1);
+  }
+
+  .pattern-bg {
+    background-image: radial-gradient(#d1d5db 0.5px, transparent 0.5px);
+    background-size: 1.5rem 1.5rem;
+    opacity: 0.3;
+  }
+
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "rxjs": "https://aistudiocdn.com/rxjs@^7.8.2?conditions=es2015",
+    "rxjs/operators": "https://aistudiocdn.com/rxjs@^7.8.2/operators?conditions=es2015",
+    "rxjs/ajax": "https://aistudiocdn.com/rxjs@^7.8.2/ajax?conditions=es2015",
+    "rxjs/webSocket": "https://aistudiocdn.com/rxjs@^7.8.2/webSocket?conditions=es2015",
+    "rxjs/testing": "https://aistudiocdn.com/rxjs@^7.8.2/testing?conditions=es2015",
+    "rxjs/fetch": "https://aistudiocdn.com/rxjs@^7.8.2/fetch?conditions=es2015",
+    "@angular/compiler": "https://next.esm.sh/@angular/compiler@^20.1.6-0?external=rxjs",
+    "@angular/platform-browser": "https://next.esm.sh/@angular/platform-browser@^20.1.6-0?external=rxjs",
+    "@angular/core": "https://next.esm.sh/@angular/core@^20.1.6-0?external=rxjs",
+    "@angular/common": "https://next.esm.sh/@angular/common@^20.1.6-0?external=rxjs",
+    "@angular/forms": "https://next.esm.sh/@angular/forms@^20.1.6-0?external=rxjs",
+    "@google/genai": "https://next.esm.sh/@google/genai@^1.20.0?external=rxjs",
+    "@angular/router": "https://next.esm.sh/@angular/router@^20.1.6-0?external=rxjs"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-[#111111] text-white font-sans antialiased">
+  <app-root></app-root>
+</body>
+</html>

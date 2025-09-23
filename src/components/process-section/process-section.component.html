@@ -1,0 +1,58 @@
+<section class="py-16 sm:py-24 bg-charcoal">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl sm:text-5xl font-bold tracking-tight" appAnimateOnScroll appShimmerText [alternateText]="'Da Ideia ao Impacto'">Meu Processo Fundamental</h2>
+      <p class="mt-4 text-lg text-gray-400" appAnimateOnScroll [animationDelay]="'100ms'">
+        Meu processo é um sistema rigoroso e iterativo, projetado para garantir a entrega de artefatos digitais de prestígio, perfeitamente alinhados aos princípios do negócio e às necessidades fundamentais do usuário.
+      </p>
+    </div>
+
+    <div class="mt-24 max-w-4xl mx-auto">
+      <div class="relative timeline-track">
+        @for(step of steps; track step.id; let i = $index; let even = $even) {
+          <div 
+            class="relative group mb-12 md:mb-20" 
+            appAnimateOnScroll 
+            [animationDelay]="(i * 150) + 200 + 'ms'">
+            
+            <!-- Timeline Node -->
+            <div class="hidden md:block absolute top-10 left-1/2 -translate-x-1/2 w-6 h-6 bg-charcoal-light border-2 border-gray-700 rounded-full z-10 transition-all duration-300 group-hover:border-white group-hover:scale-110">
+              <div class="w-full h-full rounded-full bg-white scale-0 group-hover:scale-100 transition-transform duration-300 timeline-node-active"></div>
+            </div>
+
+            <!-- Card -->
+            <div 
+              class="w-full md:w-[calc(50%-3rem)] bg-charcoal-light/60 backdrop-blur-md rounded-2xl border border-gray-800 p-8 transition-all duration-300 group-hover:border-gray-600 group-hover:-translate-y-1 group-hover:shadow-2xl group-hover:shadow-white/5 relative"
+              [class.md:ml-auto]="even"
+              [class.md:mr-auto]="!even">
+
+              <!-- Connector Line -->
+              <div class="hidden md:block absolute top-12 -translate-y-1/2 h-0.5 w-6 bg-gray-700 group-hover:bg-white transition-colors duration-300"
+                   [class.right-full]="even"
+                   [class.left-full]="!even">
+              </div>
+
+              <div class="flex flex-col md:flex-row items-start gap-6" [class.md:flex-row-reverse]="!even" [class.md:text-right]="!even">
+                <span class="text-5xl font-bold text-gray-700 transition-colors duration-300 group-hover:text-gray-500 mb-4 md:mb-0">{{ step.number }}</span>
+                <div>
+                  <h3 class="text-2xl font-semibold text-white">{{ step.title }}</h3>
+                  <p class="mt-2 text-gray-400">{{ step.description }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Decorative Icon on opposite side -->
+            <div 
+              class="hidden md:flex absolute top-0 w-[calc(50%-3rem)] h-full items-center justify-center pointer-events-none"
+              [class.left-0]="even"
+              [class.right-0]="!even">
+              <svg class="w-32 h-32 text-gray-800 opacity-20 transition-all duration-500 ease-in-out group-hover:opacity-40 group-hover:text-white group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="step.iconSvgPath" />
+              </svg>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,94 @@
+@if (caseStudy(); as study) {
+  <article class="animate-fade-in">
+    <!-- Hero Section -->
+    <header class="py-24 sm:py-32">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+        <div class="max-w-3xl mx-auto">
+          <p class="text-lg font-semibold text-gray-400">{{ study.client }}</p>
+          <h1 class="mt-2 text-5xl sm:text-7xl font-bold tracking-tighter leading-tight">
+            {{ study.title }}: {{ study.description }}
+          </h1>
+          <div class="flex flex-wrap gap-2 justify-center mt-6">
+            @for (tag of study.tags; track tag) {
+              <span class="bg-gray-800 text-gray-300 text-sm font-medium px-3 py-1 rounded-full">{{ tag }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main Image -->
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <app-image-placeholder [width]="study.imageWidth" [height]="study.imageHeight"></app-image-placeholder>
+    </div>
+    
+    <!-- Project Details -->
+    <section class="py-16 sm:py-24">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 grid md:grid-cols-3 gap-12">
+        <div class="md:col-span-1">
+          <div class="sticky top-28">
+            <h2 class="text-2xl font-bold tracking-tight" appShimmerText [alternateText]="'Raio-X do Projeto'">Detalhes do Projeto</h2>
+            <dl class="mt-6 space-y-4 text-gray-300">
+              <div>
+                <dt class="font-semibold text-white">Cliente</dt>
+                <dd>{{ study.client }}</dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-white">Duração</dt>
+                <dd>{{ study.timeline }}</dd>
+              </div>
+              <div>
+                <dt class="font-semibold text-white">Serviços</dt>
+                <dd>{{ study.services.join(', ') }}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        
+        <div class="md:col-span-2 space-y-12">
+          <div>
+            <h3 class="text-3xl font-bold text-white" appShimmerText [alternateText]="'A Missão'">O Fundamento da Colaboração</h3>
+            <p class="mt-4 text-lg text-gray-400 leading-relaxed">
+              Em colaboração com <strong>{{ study.client }}</strong>, embarcamos em um projeto transformador de <strong>{{ study.timeline }}</strong>. Apliquei um conjunto de disciplinas, incluindo <strong>{{ study.services.join(', ') }}</strong>, para resolver desafios fundamentais de negócio e impulsionar o crescimento.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-3xl font-bold text-white" appShimmerText [alternateText]="'O Obstáculo'">O Desafio Fundamental</h3>
+            <p class="mt-4 text-lg text-gray-400 leading-relaxed">{{ study.challenge }}</p>
+          </div>
+          <div>
+            <h3 class="text-3xl font-bold text-white" appShimmerText [alternateText]="'Nossa Abordagem'">A Solução Arquitetada</h3>
+            <p class="mt-4 text-lg text-gray-400 leading-relaxed">{{ study.solution }}</p>
+          </div>
+           <div>
+            <h3 class="text-3xl font-bold text-white" appShimmerText [alternateText]="'O Sucesso'">O Impacto Gerado</h3>
+            <p class="mt-4 text-lg text-gray-400 leading-relaxed">{{ study.result }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    @if(study.gallery.length > 0) {
+      <section class="py-16 sm:py-24 bg-[#191919]">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <h2 class="text-4xl sm:text-5xl font-bold tracking-tight text-center" appShimmerText [alternateText]="'Imagens do Processo'">Galeria do Projeto</h2>
+          <div class="mt-12 grid grid-cols-1 gap-8">
+            @for (image of study.gallery; track image.url) {
+              <app-image-placeholder [width]="image.width" [height]="image.height"></app-image-placeholder>
+            }
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- Navigation -->
+    <section class="py-16 sm:py-24">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 text-center">
+        <a routerLink="/case-studies" class="text-lg font-medium hover:text-gray-300 transition-colors">
+          Ver todas as colaborações
+        </a>
+      </div>
+    </section>
+  </article>
+}

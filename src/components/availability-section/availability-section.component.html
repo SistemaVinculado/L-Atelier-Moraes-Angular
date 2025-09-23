@@ -1,0 +1,34 @@
+<section class="py-16 sm:py-24 border-y border-gray-800 overflow-hidden perspective-container">
+  <div 
+    (click)="openAiModal()" 
+    appCursorHover 
+    [cursorType]="'text'" 
+    [cursorText]="'Vamos Começar'"
+    class="group cursor-pointer transform-3d-interactive"
+    [style.transform]="transformStyle()">
+    <div class="space-y-6">
+      <!-- First Row (Solid) -->
+      <div class="relative flex items-center">
+        <div class="flex animate-marquee group-hover:[animation-play-state:paused] whitespace-nowrap">
+          @for (phrase of repeatedSolidPhrases(); track $index) {
+            <div class="flex items-center">
+              <span class="mx-8 text-5xl sm:text-7xl font-bold tracking-tighter text-white">{{ phrase }}</span>
+              <span class="w-5 h-5 bg-green-500 rounded-full dot-solid"></span>
+            </div>
+          }
+        </div>
+      </div>
+      <!-- Second Row (Outline) -->
+      <div class="relative flex items-center">
+        <div class="flex animate-marquee-reverse group-hover:[animation-play-state:paused] whitespace-nowrap">
+          @for (phrase of repeatedOutlinePhrases(); track $index) {
+            <div class="flex items-center">
+              <span class="mx-8 text-5xl sm:text-7xl font-bold tracking-tighter text-white text-stroke text-glow">{{ phrase }}</span>
+              <span class="w-5 h-5 border-2 border-green-500 rounded-full dot-outline"></span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

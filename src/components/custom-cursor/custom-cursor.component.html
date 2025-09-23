@@ -1,0 +1,17 @@
+<div class="custom-cursor pointer-events-none fixed top-0 left-0 rounded-full z-[9999] transition-all duration-300 ease-out flex items-center justify-center mix-blend-difference"
+     [class.h-10]="type() !== 'text'"
+     [class.w-10]="type() !== 'text'"
+     [class.h-24]="type() === 'text'"
+     [class.w-24]="type() === 'text'"
+     [class.bg-white]="type() !== 'text'"
+     [class.border-2]="type() === 'text'"
+     [class.border-white]="type() === 'text'"
+     [class.scale-150]="type() === 'link'"
+     [class.scale-90]="isMouseDown()"
+     [style.transform]="transformStyle()">
+  @if (type() === 'text') {
+    <span class="text-sm font-semibold text-white text-center leading-tight max-w-[80%]">
+      {{ text() }}
+    </span>
+  }
+</div>

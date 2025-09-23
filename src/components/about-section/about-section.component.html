@@ -1,0 +1,77 @@
+<section class="relative h-[200vh]">
+  <div class="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-black">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full py-16 md:py-24">
+      
+      <div class="max-w-3xl mx-auto text-center mb-8 md:mb-12" appAnimateOnScroll>
+          <h2 class="text-4xl sm:text-5xl font-bold tracking-tight" appShimmerText [alternateText]="'Meus Pilares de Excelência'">Parceiro Fundamental. Arquiteto Digital.</h2>
+          <p class="mt-6 text-lg text-gray-300 leading-relaxed">
+             Minha colaboração transcende a de um fornecedor; atuo como um parceiro fundamental. Mergulho nos princípios da sua marca para arquitetar soluções que geram valor perpétuo e estabelecem um novo padrão de prestígio.
+          </p>
+      </div>
+      
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Left Column: Text Content -->
+        <div class="relative h-72">
+          @for(feature of features; track feature.id; let i = $index) {
+            <div 
+              class="absolute inset-0 transition-opacity duration-500 ease-in-out"
+              [class.opacity-100]="i === activeFeatureIndex()"
+              [class.opacity-0]="i !== activeFeatureIndex()">
+              <div class="text-gray-400 text-sm font-mono mb-4 tracking-widest">{{ feature.number }}</div>
+              <h3 class="text-white text-3xl lg:text-4xl font-bold mb-6 lg:mb-8 leading-tight tracking-tight font-sans">
+                {{ feature.title }}
+              </h3>
+              <p class="text-gray-300 text-lg leading-relaxed font-light tracking-wide max-w-md">
+                {{ feature.description }}
+              </p>
+            </div>
+          }
+        </div>
+
+        <!-- Right Column: 3D Carousel -->
+        <div class="hidden lg:flex items-center justify-center h-96" [style.perspective.px]="1000">
+          <div class="relative w-full h-full carousel-3d" [style.transform]="'rotateY(' + carouselRotation() + 'deg)'">
+            @for(feature of features; track feature.id; let i = $index) {
+              <div 
+                class="card-3d"
+                [style.transform]="'rotateY(' + (i * 120) + 'deg) translateZ(12rem)'"
+                [class.opacity-50]="i !== activeFeatureIndex()"
+                [class.opacity-100]="i === activeFeatureIndex()">
+                <div class="bg-charcoal-light p-8 lg:p-10 rounded-2xl h-full border border-gray-800">
+                   <div class="text-gray-400 text-sm font-mono mb-4 tracking-widest">{{ feature.number }}</div>
+                   <h3 class="text-white text-2xl lg:text-3xl font-bold leading-tight tracking-tight font-sans">
+                    {{ feature.title }}
+                  </h3>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+       <!-- CTA to About page (repositioned to be part of the text column on small screens) -->
+      <div class="mt-12 md:mt-8 text-center" appAnimateOnScroll>
+        <a
+          routerLink="/about"
+          class="inline-block bg-white text-black rounded-full px-8 py-4 text-lg font-semibold btn-fancy">
+          <span class="btn-content inline-flex items-center gap-3">
+            <span>Explore a Filosofia</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-800/50">
+      <div 
+        class="h-full bg-white" 
+        [style.transform]="'scaleX(' + scrollProgress() + ')'"
+        style="transform-origin: left; transition: transform 50ms linear;">
+      </div>
+    </div>
+
+  </div>
+</section>

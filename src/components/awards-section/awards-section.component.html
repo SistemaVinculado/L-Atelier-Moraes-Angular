@@ -1,0 +1,20 @@
+<section class="py-16 sm:py-24">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <h2 class="text-4xl sm:text-5xl font-bold tracking-tight" appAnimateOnScroll appShimmerText [alternateText]="'Excelência Comprovada'">Prestígio e Reconhecimento</h2>
+    <div class="mt-12 border-t border-gray-800 group/list">
+      @for (award of awards; track award.name; let i = $index) {
+        <div 
+          class="relative group py-8 border-b border-gray-800 flex justify-between items-center transition-all duration-300 ease-in-out group-hover/list:opacity-50 hover:!opacity-100 hover:bg-white/5" 
+          appAnimateOnScroll 
+          [animationDelay]="(i * 100) + 200 + 'ms'">
+          
+          <h3 class="text-xl sm:text-2xl font-medium text-gray-300 group-hover:text-white transition-colors duration-300 px-6">{{ award.name }}</h3>
+          <p class="text-xl sm:text-2xl text-gray-400 group-hover:text-white transition-colors duration-300 px-6">{{ award.count }}</p>
+
+          <!-- Animated underline -->
+          <div class="absolute bottom-[-1px] left-0 h-px w-full bg-white scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"></div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,50 @@
+<section class="py-16 sm:py-24">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight" appAnimateOnScroll appShimmerText [alternateText]="'Parcerias que Impulsionam o Futuro'">
+        A Confiança de Líderes da Indústria e Marcas Definidoras de Mercado
+      </h2>
+      <p class="mt-4 text-lg text-gray-400" appAnimateOnScroll [animationDelay]="'100ms'">
+        Meu prestígio é um reflexo direto do sucesso de meus parceiros. Colaboro seletivamente com líderes visionários para arquitetar produtos digitais que se tornam o padrão da indústria.
+      </p>
+    </div>
+    
+    <div 
+      #marqueeContainer
+      (mousemove)="onMouseMove($event)"
+      (mouseleave)="onMouseLeave()"
+      class="mt-16 relative group"
+      [style.mask-image]="'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'"
+      [style.-webkit-mask-image]="'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'"
+      [style.perspective.px]="2000">
+
+      <!-- Interactive Glow Element -->
+      <div 
+        class="pointer-events-none absolute -inset-80 rounded-full transition-opacity duration-500"
+        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(180, 180, 180, 0.1), transparent 40%);"
+        [style]="glowStyle()">
+      </div>
+      
+      <div class="flex flex-col gap-8 py-4 track3d-container">
+        <!-- Track 1 -->
+        <div class="flex animate-marquee group-hover:[animation-play-state:paused] whitespace-nowrap track3d-top transition-transform duration-700 ease-in-out">
+          @for (logo of clientLogos1(); track $index) {
+            <div class="client-logo-item mx-8 text-2xl font-medium text-gray-400">{{ logo }}</div>
+          }
+        </div>
+        <!-- Track 2 -->
+        <div class="flex animate-marquee-reverse group-hover:[animation-play-state:paused] whitespace-nowrap transition-transform duration-700 ease-in-out">
+          @for (logo of clientLogos2(); track $index) {
+            <div class="client-logo-item mx-8 text-2xl font-medium text-gray-400">{{ logo }}</div>
+          }
+        </div>
+        <!-- Track 3 -->
+        <div class="flex animate-marquee-slow group-hover:[animation-play-state:paused] whitespace-nowrap track3d-bottom transition-transform duration-700 ease-in-out">
+          @for (logo of clientLogos3(); track $index) {
+            <div class="client-logo-item mx-8 text-2xl font-medium text-gray-400">{{ logo }}</div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
