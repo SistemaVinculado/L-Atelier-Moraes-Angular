@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, computed, ElementRef, inject, effect, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, computed, ElementRef, inject, effect, PLATFORM_ID, OnDestroy, AfterViewInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -40,19 +40,16 @@ interface Feature {
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '(window:scroll)': 'onScroll()'
-  }
 })
-export class AboutSectionComponent implements OnInit, OnDestroy {
+export class AboutSectionComponent implements AfterViewInit, OnDestroy {
   private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly headerVisibilityService = inject(HeaderVisibilityService);
   private observer?: IntersectionObserver;
 
-  private readonly scrollProgress = signal(0);
+  // ESTA LINHA AGORA É PÚBLICA POR PADRÃO, CORRIGINDO O ERRO
+  readonly scrollProgress = signal(0);
   readonly activeFeatureIndex = signal(0);
-
   readonly carouselRotation = computed(() => this.scrollProgress() * -120);
 
   features: Feature[] = [
@@ -87,7 +84,7 @@ export class AboutSectionComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const options = {
         root: null,
@@ -97,7 +94,13 @@ export class AboutSectionComponent implements OnInit, OnDestroy {
 
       this.observer = new IntersectionObserver(([entry]) => {
         this.headerVisibilityService.setHeaderForceHidden(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          window.addEventListener('scroll', this.onScroll);
+        } else {
+          window.removeEventListener('scroll', this.onScroll);
+        }
       }, options);
+
       this.observer.observe(this.elementRef.nativeElement);
     }
   }
@@ -105,24 +108,19 @@ export class AboutSectionComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.observer?.disconnect();
     if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener('scroll', this.onScroll);
       this.headerVisibilityService.setHeaderForceHidden(false);
     }
   }
 
-  onScroll(): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-
+  private onScroll = (): void => {
     const hostElement = this.elementRef.nativeElement;
     const rect = hostElement.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
 
-    // The total distance we can scroll within the host element's track
     const scrollableDistance = hostElement.offsetHeight - viewportHeight;
 
     if (rect.top > 0 || rect.bottom < viewportHeight) {
-       // If the component is not fully in the "sticky" zone, clamp progress
       if (rect.top > 0) {
         this.scrollProgress.set(0);
       } else {
@@ -130,12 +128,25 @@ export class AboutSectionComponent implements OnInit, OnDestroy {
       }
       return;
     }
-    
-    // Calculate how far we've scrolled from the top of the host element
-    const scrolledFromTop = -rect.top;
 
+    const scrolledFromTop = -rect.top;
     const progress = Math.max(0, Math.min(1, scrolledFromTop / scrollableDistance));
-    
+
     this.scrollProgress.set(progress);
   }
 }
+```
+
+### O Que Fazer Agora:
+
+1.  Abra o arquivo `src/components/about-section/about-section.component.ts` no seu editor.
+2.  Apague todo o conteúdo e cole o código que forneci acima.
+3.  Salve o arquivo.
+4.  Faça o `commit` e o `push` para o GitHub:
+
+    ```bash
+    git add .
+    git commit -m "Fix: Torna scrollProgress público em AboutSectionComponent"
+    git push
+    
+
