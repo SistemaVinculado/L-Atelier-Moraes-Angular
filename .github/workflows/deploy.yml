@@ -1,58 +1,69 @@
-# Nome do nosso fluxo de trabalho automático
-name: Build and Deploy to GitHub Pages
+# Workflow para construir e publicar um site Angular no GitHub Pages
+name: Deploy Angular App to GitHub Pages
 
-# Define o gatilho: este fluxo vai rodar sempre que você enviar ("push") código para a branch "main"
 on:
+  # Roda quando um push é feito para o branch `main`
   push:
-    branches: [ "main" ]
+    branches: ['main']
+  # Permite que você rode este workflow manualmente pela aba Actions do GitHub
+  workflow_dispatch:
 
-# Define as permissões necessárias para o "robô" do GitHub
+# Define as permissões necessárias para o GitHub Actions poder publicar no GitHub Pages
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
-# Define os trabalhos (jobs) que serão executados
-jobs:
-  build-and-deploy:
-    # O tipo de máquina virtual que será usada
-    runs-on: ubuntu-latest
+# Define o que acontece quando o workflow é cancelado
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
-    # Os passos que a máquina vai executar em sequência
+jobs:
+  # Define o trabalho de build
+  build:
+    runs-on: ubuntu-latest
     steps:
-      # 1. Baixa uma cópia do seu código para a máquina virtual
-      - name: Checkout 🛎️
+      - name: Checkout
+        # Baixa o código do seu repositório
         uses: actions/checkout@v4
 
-      # 2. Instala o Node.js, que é necessário para o Angular
-      - name: Setup Node.js 🏗️
+      - name: Setup Node.js
+        # Configura o ambiente Node.js para que possamos usar npm
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Você pode usar '18' ou '20'
+          node-version: '18' # Pode usar 18 ou 20
           cache: 'npm'
 
-      # 3. Instala todas as dependências do seu projeto (como o próprio Angular)
-      - name: Install dependencies 📦
+      - name: Install Dependencies
+        # Instala todas as dependências do package.json, incluindo o @angular/cli
         run: npm install
 
-      # 4. O passo mais importante: "Constrói" o seu site para produção
-      # O --base-href é CRUCIAL para que o site funcione no GitHub Pages
-      - name: Build 🛠️
-        run: ng build --configuration production --base-href /L-Atelier-Moraes-Angular/
+      - name: Build
+        # Agora que o 'ng' existe, executa o build.
+        # O comando usa npx para garantir que a versão local do Angular CLI seja usada.
+        run: npx ng build --configuration production --base-href /L-Atelier-Moraes-Angular/
 
-      # 5. Configura o GitHub Pages para a publicação
       - name: Setup Pages
+        # Configura o GitHub Pages para receber os arquivos
         uses: actions/configure-pages@v4
 
-      # 6. Envia os arquivos "construídos" para a área de artefatos do GitHub Pages
       - name: Upload artifact
+        # Faz o upload da pasta 'dist' (que o build criou) como um artefato
         uses: actions/upload-pages-artifact@v3
         with:
-          # ATENÇÃO: Verifique se o nome da pasta é este.
-          # Normalmente é "dist/nome-do-projeto". O seu deve ser "dist/l-atelier-moraes-angular"
-          path: './dist/l-atelier-moraes-angular' 
+          path: './dist' # Caminho para a pasta de build do seu angular.json
 
-      # 7. Publica o site (deploy)
-      - name: Deploy to GitHub Pages 🚀
+  # Define o trabalho de deploy
+  deploy:
+    # O deploy só roda depois que o build for bem-sucedido
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        # Pega o artefato que foi salvo no passo anterior e publica no GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
