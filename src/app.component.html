@@ -1,0 +1,10 @@
+<app-custom-cursor></app-custom-cursor>
+<app-mouse-follower></app-mouse-follower>
+@if(modalService.isAiBriefModalOpen()) {
+  <app-ai-brief-modal></app-ai-brief-modal>
+}
+<app-header></app-header>
+<main class="pt-24">
+  <router-outlet></router-outlet>
+</main>
+<app-footer></app-footer>
