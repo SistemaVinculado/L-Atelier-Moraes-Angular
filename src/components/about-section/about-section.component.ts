@@ -50,7 +50,7 @@ export class AboutSectionComponent implements OnInit, OnDestroy {
   private readonly headerVisibilityService = inject(HeaderVisibilityService);
   private observer?: IntersectionObserver;
 
-  private readonly scrollProgress = signal(0);
+  readonly scrollProgress = signal(0);
   readonly activeFeatureIndex = signal(0);
 
   readonly carouselRotation = computed(() => this.scrollProgress() * -120);
