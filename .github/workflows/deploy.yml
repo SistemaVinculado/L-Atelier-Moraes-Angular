@@ -32,7 +32,8 @@ jobs:
         # Configura o ambiente Node.js para que possamos usar npm
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Pode usar 18 ou 20
+          # --- CORREÇÃO APLICADA AQUI ---
+          node-version: '20' 
           cache: 'npm'
 
       - name: Install Dependencies
@@ -67,3 +68,4 @@ jobs:
         # Pega o artefato que foi salvo no passo anterior e publica no GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
